@@ -5,6 +5,7 @@ import { LinearGradient } from "expo";
 import { Query } from "react-apollo";
 import { RESTAURANT_SEARCH_QUERY } from "../../graphql/queries";
 import NavBar from "../../components/NavBar";
+import FilterBar from "../../components/FilterBar";
 
 export default class Restaurants extends React.Component {
   state = {};
@@ -20,6 +21,7 @@ export default class Restaurants extends React.Component {
       >
         <SafeAreaView style={{ flex: 1 }}>
           <NavBar />
+          <FilterBar />
           <Query
             query={RESTAURANT_SEARCH_QUERY}
             variables={{
