@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+"@appandflow/touchable@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@appandflow/touchable/-/touchable-2.0.0.tgz#6a37f4a85747475ff88d1ed15c49912001c1ab6b"
+  integrity sha512-vrEQJi5CBw2P/q5zT7/HsOOB5GMtIse8ISbLV7YhNwsx2Uhj/zkJkucHpa3d5U83+FQ1KWFYvAtHXkzgLUnb7A==
+
 "@babel/code-frame@^7.0.0":
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.0.0.tgz#06e2ab19bdb535385559aabb5ba59729482800f8"
