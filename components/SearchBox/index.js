@@ -28,10 +28,6 @@ class SearchBox extends React.Component {
     inputRange: [0, 1],
     outputRange: [0, 30],
   });
-  animatedTextInputBorderRadius = this.animatedOpen.interpolate({
-    inputRange: [0, 1],
-    outputRange: [0, 10],
-  });
 
   componentDidUpdate(prevProps) {
     const { visible } = this.props;
@@ -68,9 +64,6 @@ class SearchBox extends React.Component {
       {
         width: this.animatedTextInputWidth,
         height: this.animatedTextInputHeight,
-        borderRadius: this.animatedTextInputBorderRadius,
-        //borderBottomRightRadius: this.animatedTextInputBorderRadius,
-        //borderTopRightRadius: this.animatedTextInputBorderRadius,
       },
     ];
   };
@@ -79,7 +72,7 @@ class SearchBox extends React.Component {
     return (
       <View style={styles.textInputBox}>
         {this.state.shouldRenderNode && (
-          <AnimatedTextInput style={this.getDynamicTextInputStyle()} />
+          <AnimatedTextInput autoFocus style={this.getDynamicTextInputStyle()} />
         )}
       </View>
     );
