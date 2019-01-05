@@ -1,9 +1,10 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, TextInput, Animated } from "react-native";
 import Touchable from "@appandflow/touchable";
 
 import Logo from "../Logo";
 import Icon from "../Icon";
+import SearchBox from "../SearchBox";
 
 const styles = StyleSheet.create({
   container: {
@@ -11,19 +12,35 @@ const styles = StyleSheet.create({
     paddingRight: 14,
     paddingBottom: 18,
     paddingLeft: 10,
+  },
+  topBar: {
     flexDirection: "row",
     justifyContent: "space-between",
   },
 });
 
 class NavBar extends React.Component {
+  state = {
+    isSearchBoxVisible: false,
+  };
+
+  animateToggle = () => {
+    this.setState(({ isSearchBoxVisible }) => ({
+      isSearchBoxVisible: !isSearchBoxVisible,
+    }));
+  };
+
   render() {
     return (
       <View style={styles.container}>
-        <Logo />
-        <Touchable feedback="opacity" onPress={() => {}}>
-          <Icon name="search" color="#000055" size={25} />
-        </Touchable>
+        <View style={styles.topBar}>
+          <Logo />
+          <Touchable feedback="opacity" onPress={this.animateToggle}>
+            <Icon name="search" color="#000055" size={25} />
+          </Touchable>
+        </View>
+
+        <SearchBox visible={this.state.isSearchBoxVisible} />
       </View>
     );
   }
