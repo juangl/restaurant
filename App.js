@@ -8,6 +8,7 @@ import { onError } from "apollo-link-error";
 
 import { GRAPHQL_API_URL } from "./utils/constants";
 import Restaurants from "./screens/Restaurants";
+import FontLoader from "./components/FontLoader";
 
 const httpLink = new HttpLink({ uri: GRAPHQL_API_URL });
 
@@ -39,9 +40,11 @@ const client = new ApolloClient({
 });
 
 const App = () => (
-  <ApolloProvider client={client}>
-    <Restaurants />
-  </ApolloProvider>
+  <FontLoader>
+    <ApolloProvider client={client}>
+      <Restaurants />
+    </ApolloProvider>
+  </FontLoader>
 );
 
 export default App;
