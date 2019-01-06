@@ -9,6 +9,7 @@ const styles = StyleSheet.create({
 });
 
 class PanHandler extends React.Component {
+  state = { activeIndex: 0 };
   xOffset = 0;
   dragX = new Animated.Value(0);
   animatedXOffset = new Animated.Value(0);
@@ -42,7 +43,11 @@ class PanHandler extends React.Component {
         bounciness: 0,
         toValue: this.xOffset,
         useNativeDriver: true,
-      }).start();
+      }).start(() => {
+        this.setState({
+          activeIndex: Math.abs(this.xOffset / CAR_WIDTH),
+        });
+      });
     }
   };
 
@@ -60,7 +65,7 @@ class PanHandler extends React.Component {
             { transform: [{ translateX: this.animatedTranslateX }] },
           ]}
         >
-          {this.props.children}
+          {this.props.children({ activeIndex: this.state.activeIndex })}
         </Animated.View>
       </PanGestureHandler>
     );

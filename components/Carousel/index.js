@@ -53,13 +53,16 @@ class Carousel extends React.Component {
             insertOffset={this.props.insertOffset}
             size={this.props.data.length}
           >
-            <ItemsContainer
-              data={this.props.data}
-              containerWidth={this.state.containerWidth}
-              insertOffset={this.props.insertOffset}
-              keyExtractor={this.props.keyExtractor}
-              renderItem={this.props.renderItem}
-            />
+            {({ activeIndex }) => (
+              <ItemsContainer
+                data={this.props.data}
+                containerWidth={this.state.containerWidth}
+                insertOffset={this.props.insertOffset}
+                keyExtractor={this.props.keyExtractor}
+                renderItem={this.props.renderItem}
+                activeIndex={activeIndex}
+              />
+            )}
           </PanHandler>
         ) : null}
       </View>
