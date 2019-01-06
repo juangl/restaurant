@@ -46,11 +46,6 @@ export default class Restaurants extends React.Component {
                 );
               }
 
-              console.log("DO SOMETHING SMART WITH THIS DATA");
-              //console.log('data', data);
-              //console.log('error', error);
-              console.log("result", data.search_restaurants.results);
-
               // Make sure we have data
               if (
                 data.search_restaurants &&
