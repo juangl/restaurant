@@ -12,6 +12,8 @@ import Icon from "../Icon";
 const FONT = Platform.OS === "ios" ? "GillSans" : undefined;
 
 const styles = StyleSheet.create({
+  container: { width: "100%", height: 415 },
+
   topGradient: {
     opacity: 0.73,
     position: "absolute",
@@ -63,12 +65,8 @@ const styles = StyleSheet.create({
 });
 
 function Cover(props) {
-  return (
-    <ImageBackground
-      source={{ uri: props.image }}
-      style={{ width: "100%", height: 415 }}
-      imageStyle={{ resizeMode: "cover" }}
-    >
+  const content = (
+    <>
       <LinearGradient
         colors={["rgba(0,0,0,1)", "rgba(0,0,0,0)"]}
         style={styles.topGradient}
@@ -107,8 +105,22 @@ function Cover(props) {
           </View>
         </View>
       </LinearGradient>
-    </ImageBackground>
+    </>
   );
+
+  if (props.image) {
+    return (
+      <ImageBackground
+        source={{ uri: props.image }}
+        style={styles.container}
+        imageStyle={{ resizeMode: "cover" }}
+      >
+        {content}
+      </ImageBackground>
+    );
+  }
+
+  return <View style={styles.container}>{content}</View>;
 }
 
 export default Cover;

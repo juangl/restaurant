@@ -39,7 +39,12 @@ class CarouselCard extends React.Component {
         <View style={styles.shadowContainer}>
           <Header title={data.title} />
           <InfoBar rating={data.rating} />
-          <Cover image={data.images[0]} address={data.address} />
+          <Cover
+            image={
+              data.images && data.images.length > 0 ? data.images[0] : null
+            }
+            address={data.address}
+          />
           <BottomBar phone={data.phone} />
         </View>
         <Description description={data.description} />
