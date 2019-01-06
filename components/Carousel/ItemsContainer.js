@@ -34,7 +34,6 @@ class ItemsContainer extends React.Component {
       let content = null;
       if (this.isIndexWithinWindow(index)) {
         content = this.props.renderItem(item, index);
-        console.log("index render", index)
       }
 
       return (

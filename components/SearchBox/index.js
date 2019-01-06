@@ -72,7 +72,13 @@ class SearchBox extends React.Component {
     return (
       <View style={styles.textInputBox}>
         {this.state.shouldRenderNode && (
-          <AnimatedTextInput autoFocus style={this.getDynamicTextInputStyle()} />
+          <AnimatedTextInput
+            autoFocus
+            style={this.getDynamicTextInputStyle()}
+            value={this.props.value}
+            onChangeText={this.props.onChangeText}
+            onSubmitEditing={this.props.onSubmitEditing}
+          />
         )}
       </View>
     );

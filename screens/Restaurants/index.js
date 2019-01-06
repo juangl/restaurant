@@ -10,28 +10,31 @@ import Carousel from "../../components/Carousel";
 import CarouselCard from "../../components/CarouselCard";
 
 export default class Restaurants extends React.Component {
-  state = {};
-
-  renderItem = (data) => {
-    return (
-      <CarouselCard data={data} />
-    );
+  state = {
+    queryAddress: "1260 6th Ave, New York, NY 10020",
   };
 
-  render() {
-    // TODO: This shouldn't be hard coded.  Allow the user to enter it into a Text Input
-    const address = "1260 6th Ave, New York, NY 10020";
+  renderItem = data => {
+    return <CarouselCard data={data} />;
+  };
 
+  onTextSearchChange = text => {
+    this.setState({ queryAddress: text });
+  };
+  render() {
     return (
       <LinearGradient colors={["#E8F0FA", "#FFF"]} style={{ flex: 1 }}>
         <SafeAreaView style={{ flex: 1 }}>
-          <NavBar />
+          <NavBar
+            onTextSearchChange={this.onTextSearchChange}
+            searchValue={this.state.queryAddress}
+          />
           <FilterBar />
 
           <Query
             query={RESTAURANT_SEARCH_QUERY}
             variables={{
-              address,
+              address: this.state.queryAddress,
             }}
           >
             {({ loading, error, data = {} }) => {

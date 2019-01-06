@@ -22,6 +22,7 @@ const styles = StyleSheet.create({
 class NavBar extends React.Component {
   state = {
     isSearchBoxVisible: false,
+    value: this.props.searchValue
   };
 
   animateToggle = () => {
@@ -29,6 +30,24 @@ class NavBar extends React.Component {
       isSearchBoxVisible: !isSearchBoxVisible,
     }));
   };
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.searchValue !== this.props.searchValue) {
+      this.setState({
+        value: this.props.searchValue,
+      })
+    }
+  }
+
+  onChangeText = (value) => {
+    this.setState({
+      value,
+    })
+  }
+
+  onSubmitEditing = () => {
+    this.props.onTextSearchChange(this.state.value);
+  }
 
   render() {
     return (
@@ -40,7 +59,12 @@ class NavBar extends React.Component {
           </Touchable>
         </View>
 
-        <SearchBox visible={this.state.isSearchBoxVisible} />
+        <SearchBox
+          visible={this.state.isSearchBoxVisible}
+          value={this.state.value}
+          onChangeText={this.onChangeText}
+          onSubmitEditing={this.onSubmitEditing}
+        />
       </View>
     );
   }
