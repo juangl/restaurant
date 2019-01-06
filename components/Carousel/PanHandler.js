@@ -11,38 +11,38 @@ const styles = StyleSheet.create({
 class PanHandler extends React.Component {
   xOffset = 0;
   dragX = new Animated.Value(0);
+  animatedXOffset = new Animated.Value(0);
+  animatedTranslateX = Animated.add(this.dragX, this.animatedXOffset);
   onGestureEvent = Animated.event(
     [{ nativeEvent: { translationX: this.dragX } }],
-    { useNativeDriver: false },
+    { useNativeDriver: true },
   );
 
   onHandlerStateChange = event => {
     if (event.nativeEvent.oldState === State.ACTIVE) {
       const { translationX, velocityX } = event.nativeEvent;
 
-      const currentXOffset = this.xOffset + translationX
+      const currentXOffset = this.xOffset + translationX;
       const xOffsetWithInertia = currentXOffset + velocityX * 0.15;
       const CAR_WIDTH = this.props.containerWidth - this.props.insertOffset * 2;
 
-      const closestSnap = Math.round(xOffsetWithInertia / CAR_WIDTH) * CAR_WIDTH;
+      const closestSnap =
+        Math.round(xOffsetWithInertia / CAR_WIDTH) * CAR_WIDTH;
       const lastSnap = (this.props.size - 1) * CAR_WIDTH * -1;
 
       const lastXOffset = this.xOffset;
       this.xOffset = Math.max(closestSnap, lastSnap);
       this.xOffset = Math.min(0, this.xOffset);
 
-      const diff = this.xOffset - lastXOffset;
+      this.animatedXOffset.setValue(lastXOffset + translationX);
+      this.dragX.setValue(0);
 
-      this.dragX.setOffset(lastXOffset);
-      Animated.spring(this.dragX, {
+      Animated.spring(this.animatedXOffset, {
         velocity: velocityX,
         bounciness: 0,
-        toValue: diff,
-        useNativeDriver: false,
-      }).start(() => {
-        this.dragX.setOffset(this.xOffset);
-        this.dragX.setValue(0);
-      });
+        toValue: this.xOffset,
+        useNativeDriver: true,
+      }).start();
     }
   };
 
@@ -57,7 +57,7 @@ class PanHandler extends React.Component {
         <Animated.View
           style={[
             styles.swiableContainer,
-            { transform: [{ translateX: this.dragX }] },
+            { transform: [{ translateX: this.animatedTranslateX }] },
           ]}
         >
           {this.props.children}
