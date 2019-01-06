@@ -6,6 +6,9 @@ import { Query } from "react-apollo";
 import { RESTAURANT_SEARCH_QUERY } from "../../graphql/queries";
 import NavBar from "../../components/NavBar";
 import FilterBar from "../../components/FilterBar";
+import Carousel from "../../components/Carousel";
+
+const COLORS = ["#0f0", "#00f", "#f0f", "#ff0", "#0ff"];
 
 export default class Restaurants extends React.Component {
   state = {};
@@ -15,14 +18,27 @@ export default class Restaurants extends React.Component {
     const address = "1260 6th Ave, New York, NY 10020";
 
     return (
-      <LinearGradient
-        colors={["#E8F0FA", "#FFF"]}
-        style={{ flex: 1 }}
-      >
+      <LinearGradient colors={["#E8F0FA", "#FFF"]} style={{ flex: 1 }}>
         <SafeAreaView style={{ flex: 1 }}>
           <NavBar />
           <FilterBar />
-          <Query
+
+          <Carousel
+            insertOffset={16}
+            data={[{ key: 0 }, { key: 1 }, { key: 2 }, { key: 3 }, { key: 4 }]}
+            renderItem={data => {
+              return (
+                <View
+                  style={{
+                    backgroundColor: COLORS[data.key],
+                    height: 300,
+                    width: "100%",
+                  }}
+                />
+              );
+            }}
+          />
+          {/*<Query
             query={RESTAURANT_SEARCH_QUERY}
             variables={{
               address,
@@ -67,7 +83,7 @@ export default class Restaurants extends React.Component {
                 </View>
               );
             }}
-          </Query>
+          </Query>*/}
         </SafeAreaView>
       </LinearGradient>
     );
