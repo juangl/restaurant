@@ -3,6 +3,7 @@ import { View, StyleSheet, Text } from "react-native";
 import Header from "./Header";
 import InfoBar from "./InfoBar";
 import Cover from "./cover";
+import BottomBar from "./BottomBar";
 
 const styles = StyleSheet.create({
   container: {
@@ -28,7 +29,6 @@ const styles = StyleSheet.create({
     },
   },
 });
-const COLORS = ["#0f0", "#00f", "#f0f", "#ff0", "#0ff"];
 
 class CarouselCard extends React.Component {
   render() {
@@ -39,6 +39,7 @@ class CarouselCard extends React.Component {
           <Header title={data.title} />
           <InfoBar rating={data.rating} />
           <Cover image={data.images[0]} address={data.address}/>
+          <BottomBar phone={data.phone} />
         </View>
       </View>
     );
