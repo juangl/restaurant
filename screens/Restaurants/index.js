@@ -7,11 +7,16 @@ import { RESTAURANT_SEARCH_QUERY } from "../../graphql/queries";
 import NavBar from "../../components/NavBar";
 import FilterBar from "../../components/FilterBar";
 import Carousel from "../../components/Carousel";
-
-const COLORS = ["#0f0", "#00f", "#f0f", "#ff0", "#0ff"];
+import CarouselCard from "../../components/CarouselCard";
 
 export default class Restaurants extends React.Component {
   state = {};
+
+  renderItem = (data) => {
+    return (
+      <CarouselCard data={data} />
+    );
+  };
 
   render() {
     // TODO: This shouldn't be hard coded.  Allow the user to enter it into a Text Input
@@ -23,22 +28,7 @@ export default class Restaurants extends React.Component {
           <NavBar />
           <FilterBar />
 
-          <Carousel
-            insertOffset={16}
-            data={[{ key: 0 }, { key: 1 }, { key: 2 }, { key: 3 }, { key: 4 }]}
-            renderItem={data => {
-              return (
-                <View
-                  style={{
-                    backgroundColor: COLORS[data.key],
-                    height: 300,
-                    width: "100%",
-                  }}
-                />
-              );
-            }}
-          />
-          {/*<Query
+          <Query
             query={RESTAURANT_SEARCH_QUERY}
             variables={{
               address,
@@ -56,6 +46,7 @@ export default class Restaurants extends React.Component {
               console.log("DO SOMETHING SMART WITH THIS DATA");
               //console.log('data', data);
               //console.log('error', error);
+              console.log("result", data.search_restaurants.results);
 
               // Make sure we have data
               if (
@@ -64,14 +55,13 @@ export default class Restaurants extends React.Component {
                 data.search_restaurants.results.length > 0
               ) {
                 return (
-                  <View style={{ flex: 1, width: "100%", paddingVertical: 10 }}>
-                    <Text>
-                      Num Restaurants: {data.search_restaurants.results.length}
-                    </Text>
-                    <Text>----</Text>
-                    {data.search_restaurants.results.map(r => {
-                      return <Text key={r.id}>{r.title}</Text>;
-                    })}
+                  <View style={{ marginTop: 7 }}>
+                    <Carousel
+                      insertOffset={16}
+                      data={data.search_restaurants.results}
+                      renderItem={this.renderItem}
+                      keyExtractor={item => item.id}
+                    />
                   </View>
                 );
               }
@@ -83,7 +73,7 @@ export default class Restaurants extends React.Component {
                 </View>
               );
             }}
-          </Query>*/}
+          </Query>
         </SafeAreaView>
       </LinearGradient>
     );
