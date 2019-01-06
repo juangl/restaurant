@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "food",
+    "name": "Food",
     "slug": "food",
     "privacy": "public",
     "sdkVersion": "32.0.0",
@@ -24,6 +24,8 @@
     ],
     "ios": {
       "supportsTablet": true
-    }
+    },
+    "description": "Simple app challenge",
+    "githubUrl": "https://github.com/juangl/restaurant"
   }
 }
