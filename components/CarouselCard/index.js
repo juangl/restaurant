@@ -4,6 +4,7 @@ import Header from "./Header";
 import InfoBar from "./InfoBar";
 import Cover from "./cover";
 import BottomBar from "./BottomBar";
+import Description from "./Description";
 
 const styles = StyleSheet.create({
   container: {
@@ -38,9 +39,10 @@ class CarouselCard extends React.Component {
         <View style={styles.shadowContainer}>
           <Header title={data.title} />
           <InfoBar rating={data.rating} />
-          <Cover image={data.images[0]} address={data.address}/>
+          <Cover image={data.images[0]} address={data.address} />
           <BottomBar phone={data.phone} />
         </View>
+        <Description description={data.description} />
       </View>
     );
   }
