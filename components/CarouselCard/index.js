@@ -2,6 +2,7 @@ import React from "react";
 import { View, StyleSheet, Text } from "react-native";
 import Header from "./Header";
 import InfoBar from "./InfoBar";
+import Cover from "./cover";
 
 const styles = StyleSheet.create({
   container: {
@@ -19,13 +20,13 @@ const styles = StyleSheet.create({
 
   shadowContainer: {
     shadowColor: "#000",
-    shadowOpacity: .5,
+    shadowOpacity: 0.5,
     shadowRadius: 4,
     shadowOffset: {
       width: 0,
       height: 2,
-    }
-  }
+    },
+  },
 });
 const COLORS = ["#0f0", "#00f", "#f0f", "#ff0", "#0ff"];
 
@@ -37,12 +38,7 @@ class CarouselCard extends React.Component {
         <View style={styles.shadowContainer}>
           <Header title={data.title} />
           <InfoBar rating={data.rating} />
-          <View
-            style={{
-              backgroundColor: COLORS[Math.floor(Math.random() * 4)],
-              height: 300,
-            }}
-          />
+          <Cover image={data.images[0]} address={data.address}/>
         </View>
       </View>
     );
