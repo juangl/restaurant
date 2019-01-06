@@ -1,6 +1,7 @@
 import React from "react";
 import { View, ActivityIndicator, Text, SafeAreaView } from "react-native";
 import { LinearGradient } from "expo";
+import { ScrollView } from "react-native-gesture-handler";
 
 import { Query } from "react-apollo";
 import { RESTAURANT_SEARCH_QUERY } from "../../graphql/queries";
@@ -22,6 +23,7 @@ export default class Restaurants extends React.Component {
     this.setState({ queryAddress: text });
   };
   render() {
+    const panRef = React.createRef();
     return (
       <LinearGradient colors={["#E8F0FA", "#FFF"]} style={{ flex: 1 }}>
         <SafeAreaView style={{ flex: 1 }}>
@@ -29,49 +31,51 @@ export default class Restaurants extends React.Component {
             onTextSearchChange={this.onTextSearchChange}
             searchValue={this.state.queryAddress}
           />
-          <FilterBar />
+          <ScrollView waitFor={[panRef]}>
+            <FilterBar />
+            <Query
+              query={RESTAURANT_SEARCH_QUERY}
+              variables={{
+                address: this.state.queryAddress,
+              }}
+            >
+              {({ loading, error, data = {} }) => {
+                if (loading) {
+                  return (
+                    <View style={{ width: "100%", paddingVertical: 10 }}>
+                      <ActivityIndicator size="large" style={{ padding: 30 }} />
+                    </View>
+                  );
+                }
 
-          <Query
-            query={RESTAURANT_SEARCH_QUERY}
-            variables={{
-              address: this.state.queryAddress,
-            }}
-          >
-            {({ loading, error, data = {} }) => {
-              if (loading) {
+                // Make sure we have data
+                if (
+                  data.search_restaurants &&
+                  data.search_restaurants.results &&
+                  data.search_restaurants.results.length > 0
+                ) {
+                  return (
+                    <View style={{ marginTop: 7 }}>
+                      <Carousel
+                        insertOffset={16}
+                        data={data.search_restaurants.results}
+                        renderItem={this.renderItem}
+                        keyExtractor={item => item.id}
+                        panRef={panRef}
+                      />
+                    </View>
+                  );
+                }
+
+                // No Data Return
                 return (
                   <View style={{ width: "100%", paddingVertical: 10 }}>
-                    <ActivityIndicator size="large" style={{ padding: 30 }} />
+                    <Text>No Results</Text>
                   </View>
                 );
-              }
-
-              // Make sure we have data
-              if (
-                data.search_restaurants &&
-                data.search_restaurants.results &&
-                data.search_restaurants.results.length > 0
-              ) {
-                return (
-                  <View style={{ marginTop: 7 }}>
-                    <Carousel
-                      insertOffset={16}
-                      data={data.search_restaurants.results}
-                      renderItem={this.renderItem}
-                      keyExtractor={item => item.id}
-                    />
-                  </View>
-                );
-              }
-
-              // No Data Return
-              return (
-                <View style={{ width: "100%", paddingVertical: 10 }}>
-                  <Text>No Results</Text>
-                </View>
-              );
-            }}
-          </Query>
+              }}
+            </Query>
+          </ScrollView>
         </SafeAreaView>
       </LinearGradient>
     );

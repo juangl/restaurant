@@ -6,6 +6,7 @@ import Icon from "../Icon";
 
 const styles = StyleSheet.create({
   container: {
+    paddingTop: 18,
     paddingHorizontal: 17,
     flexDirection: "row",
   },

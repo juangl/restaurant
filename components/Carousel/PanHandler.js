@@ -58,6 +58,8 @@ class PanHandler extends React.Component {
         maxPointers={1}
         onGestureEvent={this.onGestureEvent}
         onHandlerStateChange={this.onHandlerStateChange}
+        minDist={30}
+        ref={this.props.panRef}
       >
         <Animated.View
           style={[

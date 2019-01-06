@@ -10,7 +10,6 @@ const styles = StyleSheet.create({
   container: {
     paddingTop: 19,
     paddingRight: 14,
-    paddingBottom: 18,
     paddingLeft: 10,
   },
   topBar: {

@@ -52,6 +52,7 @@ class Carousel extends React.Component {
             containerWidth={this.state.containerWidth}
             insertOffset={this.props.insertOffset}
             size={this.props.data.length}
+            panRef={this.props.panRef}
           >
             {({ activeIndex }) => (
               <ItemsContainer
