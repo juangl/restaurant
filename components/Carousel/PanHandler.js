@@ -1,11 +1,9 @@
 import React from "react";
-import { Animated, StyleSheet } from "react-native";
+import { Animated, StyleSheet, View } from "react-native";
 import { PanGestureHandler, State } from "react-native-gesture-handler";
 
 const styles = StyleSheet.create({
-  swiableContainer: {
-    flexDirection: "row",
-  },
+  swiableContainer: {},
 });
 
 class PanHandler extends React.Component {
@@ -52,22 +50,27 @@ class PanHandler extends React.Component {
   };
 
   render() {
+    const content = this.props.children({
+      activeIndex: this.state.activeIndex,
+    });
+
     return (
       <PanGestureHandler
-        {...this.props}
         maxPointers={1}
         onGestureEvent={this.onGestureEvent}
         onHandlerStateChange={this.onHandlerStateChange}
         minDist={30}
         ref={this.props.panRef}
       >
-        <Animated.View
-          style={[
-            styles.swiableContainer,
-            { transform: [{ translateX: this.animatedTranslateX }] },
-          ]}
-        >
-          {this.props.children({ activeIndex: this.state.activeIndex })}
+        <Animated.View>
+          <Animated.View
+            style={[
+              styles.swiableContainer,
+              { transform: [{ translateX: this.animatedTranslateX }] },
+            ]}
+          >
+            {content}
+          </Animated.View>
         </Animated.View>
       </PanGestureHandler>
     );

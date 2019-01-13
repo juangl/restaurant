@@ -24,11 +24,6 @@ const errorLink = onError(({ networkError, graphQLErrors }) => {
 });
 
 const middlewareLink = new ApolloLink((operation, forward) => {
-  console.log("IN MIDDLEWARE");
-  console.log("QUERY BODY");
-  console.log(operation.query.loc.source.body);
-  console.log("QUERY VARIABLES");
-  console.log(operation.variables);
   return forward(operation);
 });
 

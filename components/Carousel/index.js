@@ -39,13 +39,7 @@ class Carousel extends React.Component {
 
   render() {
     return (
-      <View
-        style={[
-          styles.container,
-          { paddingHorizontal: this.props.insertOffset },
-        ]}
-        onLayout={this.measureContainer}
-      >
+      <View style={styles.container} onLayout={this.measureContainer}>
         {this.state.containerWidth ? (
           /* container width should be known */
           <PanHandler

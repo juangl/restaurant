@@ -3,15 +3,14 @@ import { View, StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
   itemWrapper: {},
+  container: { flexDirection: "row" },
 });
 
 const WINDOW_SIZE = 6;
 
 class ItemsContainer extends React.Component {
-  getContentWrapperDynamicStyle = () => {
-    return {
-      width: this.props.containerWidth - this.props.insertOffset * 2,
-    };
+  getContentWidth = () => {
+    return this.props.containerWidth - this.props.insertOffset * 2;
   };
 
   isIndexWithinWindow = index => {
@@ -29,8 +28,11 @@ class ItemsContainer extends React.Component {
   };
 
   render() {
-    const contentWrapperStyle = this.getContentWrapperDynamicStyle();
-    return this.props.data.map((item, index) => {
+    const contentWidth = this.getContentWidth();
+
+    const containerWidth = contentWidth * this.props.data.length;
+
+    const children = this.props.data.map((item, index) => {
       let content = null;
       if (this.isIndexWithinWindow(index)) {
         content = this.props.renderItem(item, index);
@@ -39,12 +41,23 @@ class ItemsContainer extends React.Component {
       return (
         <View
           key={this.props.keyExtractor(item)}
-          style={[styles.itemWrapper, contentWrapperStyle]}
+          style={[styles.itemWrapper, { width: contentWidth }]}
         >
           {content}
         </View>
       );
     });
+
+    return (
+      <View
+        style={[
+          styles.container,
+          { width: containerWidth, paddingHorizontal: this.props.insertOffset },
+        ]}
+      >
+        {children}
+      </View>
+    );
   }
 }
 
