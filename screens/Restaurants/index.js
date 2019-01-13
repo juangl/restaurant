@@ -1,5 +1,12 @@
 import React from "react";
-import { View, ActivityIndicator, Text, SafeAreaView } from "react-native";
+import {
+  View,
+  ActivityIndicator,
+  Text,
+  SafeAreaView,
+  StyleSheet,
+  Platform,
+} from "react-native";
 import { LinearGradient } from "expo";
 import { ScrollView } from "react-native-gesture-handler";
 
@@ -9,6 +16,13 @@ import NavBar from "../../components/NavBar";
 import FilterBar from "../../components/FilterBar";
 import Carousel from "../../components/Carousel";
 import CarouselCard from "../../components/CarouselCard";
+
+const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    paddingTop: Platform.OS === "android" ? 25 : 0,
+  },
+});
 
 export default class Restaurants extends React.Component {
   state = {
@@ -26,7 +40,7 @@ export default class Restaurants extends React.Component {
     const panRef = React.createRef();
     return (
       <LinearGradient colors={["#E8F0FA", "#FFF"]} style={{ flex: 1 }}>
-        <SafeAreaView style={{ flex: 1 }}>
+        <SafeAreaView style={styles.safeArea}>
           <NavBar
             onTextSearchChange={this.onTextSearchChange}
             searchValue={this.state.queryAddress}
